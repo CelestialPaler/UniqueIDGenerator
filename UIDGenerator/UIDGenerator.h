@@ -43,7 +43,6 @@ namespace Util
 		const long GetNewUID(void);
 		void SetRange(const long low, const long high);
 
-	private:
 		// Private constructor
 		UIDGenerator(void) {}
 		// No copy constructor

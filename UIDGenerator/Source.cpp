@@ -37,17 +37,13 @@ int main(int argc, char* argv[])
 	std::thread thr1{ [] {
 		std::shared_ptr<Util::UIDGenerator> uidgen = Util::UIDGenerator::GetInstance(); 
 		for (size_t i = 0; i < 10; i++)
-		{
 			std::cout << "Thread1 : " << uidgen->GetNewUID() << std::endl;
-		}
 	} };
 
 	std::thread thr2{ [] {
 		std::shared_ptr<Util::UIDGenerator> uidgen = Util::UIDGenerator::GetInstance();
 		for (size_t i = 0; i < 10; i++)
-		{
-			std::cout << "Thread2 : " << uidgen->GetNewUID() << std::endl;
-		}
+			 std::cout << "Thread2 : " << uidgen->GetNewUID() << std::endl; 
 	} };
 
 	thr1.join();

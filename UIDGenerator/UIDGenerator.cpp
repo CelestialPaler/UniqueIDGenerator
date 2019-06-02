@@ -9,7 +9,7 @@ std::shared_ptr<Util::UIDGenerator> Util::UIDGenerator::GetInstance(void)
 	if (instancePointer == nullptr)
 	{
 		srand(time(0));
-		instancePointer = std::make_unique<Util::UIDGenerator>();
+		instancePointer = std::make_shared<UIDGenerator>();
 	}
 	return instancePointer;
 }
