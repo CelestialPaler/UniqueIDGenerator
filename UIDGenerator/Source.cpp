@@ -28,6 +28,7 @@
 
 #include "UIDGenerator.h"
 
+// Example code
 int main(int argc, char* argv[])
 {
 	std::shared_ptr<Util::UIDGenerator> uidgen = Util::UIDGenerator::GetInstance();

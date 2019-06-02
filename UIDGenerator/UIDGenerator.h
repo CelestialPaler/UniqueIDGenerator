@@ -31,7 +31,9 @@
 namespace Util
 {
 	// Unique ID Generator Class
-	// Based on the idea of singleton mode, it ensures that UID generator is singleton and multithreaded, and uses smart pointer to ensure no memory leak.
+	// Based on the idea of singleton mode, the UID generator is designed to be singleton and safe in multithreaded situation. 
+	// Use smart pointers to ensure no memory leaks. 
+	// Use std::set to ensure that the ID sequence is unique.
 	class UIDGenerator
 	{
 	public:
@@ -41,8 +43,12 @@ namespace Util
 		const long GetNewUID(void);
 		void SetRange(const long low, const long high);
 
+	private:
+		// Private constructor
 		UIDGenerator(void) {}
+		// No copy constructor
 		UIDGenerator(const UIDGenerator& _uidgen) = delete;
+		// No assign operation
 		UIDGenerator& operator = (const UIDGenerator& _uidgen) = delete;
 
 	private:
