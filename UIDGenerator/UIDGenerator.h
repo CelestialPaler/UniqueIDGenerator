@@ -24,6 +24,7 @@
 
 #pragma once
 
+#include <random>
 #include <set>
 #include <mutex>
 
@@ -40,11 +41,14 @@ namespace Util
 		static std::shared_ptr<Util::UIDGenerator> GetInstance(void);
 
 	public:
-		const long GetNewUID(void);
-		void SetRange(const long low, const long high);
+		const unsigned long GetNewUID(void);
+		void SetRange(const unsigned long _min, const unsigned long _max);
 
 		// Private constructor
-		UIDGenerator(void) {}
+		UIDGenerator(void) 
+		{ 
+			engine.seed(std::chrono::steady_clock::now().time_since_epoch().count());
+		}
 		// No copy constructor
 		UIDGenerator(const UIDGenerator& _uidgen) = delete;
 		// No assign operation
@@ -52,7 +56,7 @@ namespace Util
 
 	private:
 		std::set<long> existID;
-		long low{ 0 };
-		long high{ 0 };
+		std::default_random_engine engine;
+		std::unique_ptr<std::uniform_int_distribution<unsigned long>> distribution;
 	};
 }

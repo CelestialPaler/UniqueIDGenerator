@@ -14,25 +14,22 @@ std::shared_ptr<Util::UIDGenerator> Util::UIDGenerator::GetInstance(void)
 	return instancePointer;
 }
 
-const long Util::UIDGenerator::GetNewUID(void)
+const unsigned long Util::UIDGenerator::GetNewUID(void)
 {
-	if (existID.size() >= (high - low))
+	if (existID.size() >= (distribution->max() - distribution->min()))
 		throw std::runtime_error("UID Generator ran out of ids.");
 	std::lock_guard<std::mutex> mutex{ mutexUIDGenerator };
-	long newUID{ 0 };
-	do {
-		do {
-			newUID = low + (float)rand() / RAND_MAX * (high - low);
-		} while (newUID<low || newUID> high);
-	} while (existID.find(newUID) != existID.end());
+	unsigned long newUID{ 0 };
+	do { newUID = distribution->operator()(engine); } while (existID.find(newUID) != existID.end());
 	existID.insert(newUID);
 	return newUID;
 }
 
-void Util::UIDGenerator::SetRange(const long low, const long high)
+void Util::UIDGenerator::SetRange(const unsigned long _min, const unsigned long _max)
 {
-	this->low = low;
-	this->high = high;
+	std::unique_ptr<std::uniform_int_distribution<unsigned long>> tempDistribution = std::make_unique<std::uniform_int_distribution<unsigned long>>(_min, _max);
+	this->distribution.swap(tempDistribution);
+	tempDistribution.release();
 }
 
 
