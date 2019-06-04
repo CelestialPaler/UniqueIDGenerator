@@ -32,4 +32,9 @@ void Util::UIDGenerator::SetRange(const unsigned long _min, const unsigned long 
 	tempDistribution.release();
 }
 
+Util::UIDGenerator::UIDGenerator(void)
+{
+	engine.seed(std::chrono::steady_clock::now().time_since_epoch().count());
+}
+
 

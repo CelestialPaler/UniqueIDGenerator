@@ -45,17 +45,14 @@ namespace Util
 		void SetRange(const unsigned long _min, const unsigned long _max);
 
 		// Private constructor
-		UIDGenerator(void) 
-		{ 
-			engine.seed(std::chrono::steady_clock::now().time_since_epoch().count());
-		}
+		UIDGenerator(void);
 		// No copy constructor
 		UIDGenerator(const UIDGenerator& _uidgen) = delete;
 		// No assign operation
 		UIDGenerator& operator = (const UIDGenerator& _uidgen) = delete;
 
 	private:
-		std::set<long> existID;
+		std::set<unsigned long> existID;
 		std::default_random_engine engine;
 		std::unique_ptr<std::uniform_int_distribution<unsigned long>> distribution;
 	};
